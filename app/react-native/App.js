@@ -1,12 +1,16 @@
+import React from 'react'
 import { StatusBar } from 'expo-status-bar';
+import { WebView } from 'react-native-webview';
 import { StyleSheet, Text, View } from 'react-native';
 
 export default function App() {
+  const websiteUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'http://vibe.com'
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <WebView
+      style={styles.container}
+      source={{ uri: websiteUrl }}
+    />
   );
 }
 
