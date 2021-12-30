@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :user_buddies
   has_many :buddies, through: :user_buddies
+  has_many :daily_statuses
 end

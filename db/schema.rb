@@ -15,6 +15,15 @@ ActiveRecord::Schema.define(version: 2021_12_30_170511) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "daily_statuses", force: :cascade do |t|
+    t.date "day"
+    t.bigint "user_id", null: false
+    t.string "answer"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_daily_statuses_on_user_id"
+  end
+
   create_table "user_buddies", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "buddy_id", null: false
@@ -37,6 +46,7 @@ ActiveRecord::Schema.define(version: 2021_12_30_170511) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "daily_statuses", "users"
   add_foreign_key "user_buddies", "users"
   add_foreign_key "user_buddies", "users", column: "buddy_id"
 end
