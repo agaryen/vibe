@@ -2,6 +2,19 @@
 <p>Find me in app/views/home/show.html.erb</p>
 <% if user_signed_in? %>
   Logged in as <%= current_user.email %>
+    <%= form_tag buddies_path, method: :post do %>
+      <ul>
+        <% User.all.where.not(id: current_user.id).each do |user| %>
+          <li>
+          <label>
+            <%= check_box_tag "buddies[]", user.id, current_user.buddies.include?(user) %>
+            <%= user.email %>
+          </label>
+          </li>
+        <% end %>
+      </ul>
+      <%= submit_tag %>
+    <% end %>
 <% else %>
   <%= link_to 'login', new_user_session_path %>
   <%= link_to 'register', new_user_registration_path %>

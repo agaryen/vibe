@@ -4,8 +4,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
   }
 
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :buddies, only: [:create]
 
-  # Defines the root path route ("/")
   root to: 'home#show'
 end
