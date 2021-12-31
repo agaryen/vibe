@@ -24,19 +24,21 @@ class DailyStatus < ApplicationRecord
           user_answers[user_id] = NO
         elsif buddies.any? { |buddy| user_answers[buddy.buddy_id] == YES }
           user_answers[user_id] = YES
-        elsif buddies.all? { |buddy| user_answers[buddy.buddy_id] == NO }
+        elsif buddies.all? { |buddy| user_answers[buddy.buddy_id] == NO || user_answers[buddy.buddy_id].nil? }
           user_answers[user_id] = NO
         else
+          # This checks if we have a deadlocked hesitant friendship
           friendship_buddy_id =
             buddies.find do |buddy|
               bud_buddies = (@user_buddies[buddy.buddy_id] || [])
-              bud_buddies.map(&:buddy_id).include?(user_id)
+              bud_buddies.map(&:buddy_id).include?(user_id) && user_answers[buddy.buddy_id] == MAYBE
             end
+
           if friendship_buddy_id
             user_answers[user_id] = YES
             user_answers[friendship_buddy_id] = YES if user_answers.key?(friendship_buddy_id) # perf
           else
-            # only maybes, we need to compute them
+            # only maybes, we need to re-compute them
           end
         end
       end

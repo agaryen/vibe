@@ -121,6 +121,18 @@ class DailyStatusTest < ActiveSupport::TestCase
     assert_equal YES, results[user_b.id]
   end
 
+    test 'MAYBE and NO_ANSWER' do
+      user_a = create_user_with_answer(MAYBE)
+      user_b = create(:user)
+      create(:user_buddy, user: user_a, buddy: user_b)
+      create(:user_buddy, user: user_b, buddy: user_a)
+
+      results = DailyStatus.compute(day: 1.day.from_now)
+
+      assert_equal NO, results[user_a.id]
+      assert_nil results[user_b.id]
+    end
+
   test 'MAYBE and MAYBE but no friends' do
     user_a = create_user_with_answer(MAYBE)
     user_b = create_user_with_answer(MAYBE)
