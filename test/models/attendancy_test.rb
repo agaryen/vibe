@@ -5,13 +5,6 @@ class AttendancyTest < ActiveSupport::TestCase
   NO = Attendancy::NO
   MAYBE = Attendancy::MAYBE
 
-  teardown do
-    if ENV['GRAPH']
-      generate_graph
-      Dir.glob('tmp/**.dot').each { |file| File.delete(file)}
-    end
-  end
-
   test 'YES and YES' do
     user_a = create_user_with_answer(YES)
     user_b = create_user_with_answer(YES)
@@ -175,6 +168,36 @@ class AttendancyTest < ActiveSupport::TestCase
     assert_nil results[user_c.id]
   end
 
+  test 'complex case' do
+    user_a = create_user_with_answer(MAYBE)
+    user_b = create_user_with_answer(MAYBE)
+    user_c = create_user_with_answer(MAYBE)
+    user_d = create_user_with_answer(MAYBE)
+    user_e = create_user_with_answer(MAYBE)
+    user_f = create_user_with_answer(NO)
+    user_g = create_user_with_answer(YES)
+    user_h = create_user_with_answer(MAYBE)
+    create_buddies(
+      user_a => [user_b, user_e],
+      user_b => [user_c],
+      user_c => [user_d, user_f, user_g],
+      user_d => [user_a],
+      user_e => [user_c],
+      user_h => [user_f],
+    )
+
+    results = Attendancy.new(day: 1.day.from_now).compute
+
+    assert_equal YES, results[user_a.id]
+    assert_equal YES, results[user_b.id]
+    assert_equal YES, results[user_c.id]
+    assert_equal YES, results[user_d.id]
+    assert_equal YES, results[user_e.id]
+    assert_equal NO, results[user_f.id]
+    assert_equal YES, results[user_g.id]
+    assert_equal NO, results[user_h.id]
+  end
+
   test 'MAYBE and MAYBE but no friends' do
     user_a = create_user_with_answer(MAYBE)
     user_b = create_user_with_answer(MAYBE)
@@ -195,7 +218,12 @@ class AttendancyTest < ActiveSupport::TestCase
     user
   end
 
-  def generate_graph
-    UserBuddy.generate_visual_graph(name: "tmp/#{method_name}")
+
+  def create_buddies(hash)
+    hash.each do |user, buddies|
+      buddies.each do |buddy|
+        create(:user_buddy, user: user, buddy: buddy)
+      end
+    end
   end
 end

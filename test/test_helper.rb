@@ -11,5 +11,11 @@ class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
 
-  # Add more helper methods to be used by all tests here...
+
+  teardown do
+    if ENV['GRAPH']
+      UserBuddy.generate_visual_graph(name: "tmp/#{method_name}")
+      Dir.glob('tmp/**.dot').each { |file| File.delete(file)}
+    end
+  end
 end
