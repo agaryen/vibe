@@ -1,0 +1,22 @@
+- if user_signed_in?
+  | Logged in as #{current_user.email}
+  - if @users.present?
+    h3 Who are you buddies?
+    = form_tag buddies_path, method: :post
+      ul
+        - @users.each do |user|
+          li
+            label
+              = check_box_tag "buddies[]", user.id, current_user.buddies.include?(user)
+              = user.email
+      = submit_tag "We're okay."
+
+  h3 Who is coming tomorrow?
+  table
+    - @users.each do |user|
+      tr
+        td = user.email
+        td = user.daily_statuses.find_by(day: 1.day.from_now)&.answer || 'NOT ANSWER'
+- else
+  = link_to 'login', new_user_session_path
+  = link_to 'register', new_user_registration_path
