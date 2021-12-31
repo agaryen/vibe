@@ -121,17 +121,52 @@ class DailyStatusTest < ActiveSupport::TestCase
     assert_equal YES, results[user_b.id]
   end
 
-    test 'MAYBE and NO_ANSWER' do
-      user_a = create_user_with_answer(MAYBE)
-      user_b = create(:user)
-      create(:user_buddy, user: user_a, buddy: user_b)
-      create(:user_buddy, user: user_b, buddy: user_a)
+  # indirect deadlock case
+  test 'cyclic MAYBE' do
+    user_a = create_user_with_answer(MAYBE)
+    user_b = create_user_with_answer(MAYBE)
+    user_c = create_user_with_answer(MAYBE)
+    user_d = create_user_with_answer(MAYBE)
+    create(:user_buddy, user: user_a, buddy: user_b)
+    create(:user_buddy, user: user_b, buddy: user_c)
+    create(:user_buddy, user: user_c, buddy: user_d)
+    create(:user_buddy, user: user_d, buddy: user_a)
 
-      results = DailyStatus.compute(day: 1.day.from_now)
+    results = DailyStatus.compute(day: 1.day.from_now)
 
-      assert_equal NO, results[user_a.id]
-      assert_nil results[user_b.id]
-    end
+    assert_equal YES, results[user_a.id]
+    assert_equal YES, results[user_b.id]
+    assert_equal YES, results[user_c.id]
+    assert_equal YES, results[user_d.id]
+  end
+
+  test 'MAYBE and NO_ANSWER' do
+    user_a = create_user_with_answer(MAYBE)
+    user_b = create(:user)
+    create(:user_buddy, user: user_a, buddy: user_b)
+    create(:user_buddy, user: user_b, buddy: user_a)
+
+    results = DailyStatus.compute(day: 1.day.from_now)
+
+    assert_nil results[user_a.id]
+    assert_nil results[user_b.id]
+  end
+
+  test 'MAYBE and MAYBE and NO_ANSWER' do
+    user_a = create_user_with_answer(MAYBE)
+    user_b = create_user_with_answer(MAYBE)
+    user_c = create(:user)
+
+    create(:user_buddy, user: user_a, buddy: user_b)
+    create(:user_buddy, user: user_b, buddy: user_c)
+    create(:user_buddy, user: user_c, buddy: user_a)
+
+    results = DailyStatus.compute(day: 1.day.from_now)
+
+    assert_nil results[user_a.id]
+    assert_nil results[user_b.id]
+    assert_nil results[user_c.id]
+  end
 
   test 'MAYBE and MAYBE but no friends' do
     user_a = create_user_with_answer(MAYBE)

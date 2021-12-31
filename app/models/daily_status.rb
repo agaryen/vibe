@@ -1,3 +1,6 @@
+require 'rgl/adjacency'
+require 'rgl/path'
+
 class DailyStatus < ApplicationRecord
   YES = 'YES'
   NO = 'NO'
@@ -14,6 +17,8 @@ class DailyStatus < ApplicationRecord
         results[user.id] = @tomorrow_statuses[user.id]&.answer
       end
 
+    resolve_cyclic_dependencies(user_answers, day)
+
     while user_answers.values.include?(MAYBE) do
       user_answers.each do |user_id, answer|
         next if answer != MAYBE
@@ -22,28 +27,26 @@ class DailyStatus < ApplicationRecord
 
         if buddies.empty?
           user_answers[user_id] = NO
+        elsif buddies.any? { |buddy| user_answers[buddy.buddy_id].nil? }
+          user_answers[user_id] = nil # still computing
         elsif buddies.any? { |buddy| user_answers[buddy.buddy_id] == YES }
           user_answers[user_id] = YES
-        elsif buddies.all? { |buddy| user_answers[buddy.buddy_id] == NO || user_answers[buddy.buddy_id].nil? }
+        elsif buddies.all? { |buddy| user_answers[buddy.buddy_id] == NO }
           user_answers[user_id] = NO
         else
-          # This checks if we have a deadlocked hesitant friendship
-          friendship_buddy_id =
-            buddies.find do |buddy|
-              bud_buddies = (@user_buddies[buddy.buddy_id] || [])
-              bud_buddies.map(&:buddy_id).include?(user_id) && user_answers[buddy.buddy_id] == MAYBE
-            end
-
-          if friendship_buddy_id
-            user_answers[user_id] = YES
-            user_answers[friendship_buddy_id] = YES if user_answers.key?(friendship_buddy_id) # perf
-          else
-            # only maybes, we need to re-compute them
-          end
+          # unresolvable this loop
         end
       end
     end
 
     user_answers
+  end
+
+  def self.resolve_cyclic_dependencies(user_answers, day)
+    maybe_friendships = UserBuddy.joins(user: :daily_statuses).merge(DailyStatus.where(day: day).where(answer: MAYBE))
+    maybe_graph = RGL::DirectedAdjacencyGraph[*maybe_friendships.pluck(:user_id, :buddy_id).flatten]
+    maybe_graph.cycles.flatten.each do |user_id|
+      user_answers[user_id] = YES
+    end
   end
 end
