@@ -5,6 +5,13 @@ class AttendancyTest < ActiveSupport::TestCase
   NO = Attendancy::NO
   MAYBE = Attendancy::MAYBE
 
+  teardown do
+    if ENV['GRAPH']
+      generate_graph
+      Dir.glob('tmp/**.dot').each { |file| File.delete(file)}
+    end
+  end
+
   test 'YES and YES' do
     user_a = create_user_with_answer(YES)
     user_b = create_user_with_answer(YES)
@@ -186,5 +193,9 @@ class AttendancyTest < ActiveSupport::TestCase
     user = create(:user)
     create(:daily_status, user: user, answer: answer)
     user
+  end
+
+  def generate_graph
+    UserBuddy.generate_visual_graph(name: "tmp/#{method_name}")
   end
 end

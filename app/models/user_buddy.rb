@@ -10,8 +10,8 @@ class UserBuddy < ApplicationRecord
     RGL::DirectedAdjacencyGraph[*self.joins(:user, :buddy).pluck(:user_id, :buddy_id).flatten]
   end
 
-  def self.generate_visual_graph
+def self.generate_visual_graph(name: 'public/friendship')
     RGL::DirectedAdjacencyGraph[*self.joins(:user, :buddy).pluck('users.email', 'buddies_user_buddies.email').flatten]
-      .write_to_graphic_file('png', 'public/friendship')
+      .write_to_graphic_file('png', name)
   end
 end

@@ -1,3 +1,6 @@
+require 'timeout'
+
+
 class Attendancy
   YES = 'YES'
   NO = 'NO'
@@ -17,22 +20,24 @@ class Attendancy
       end
     resolve_cyclic_dependencies(attendancies)
 
-    while attendancies.values.include?(MAYBE) do
-      attendancies.each do |user_id, answer|
-        next if answer != MAYBE
+    Timeout.timeout(5) do
+      while attendancies.values.include?(MAYBE) do
+        attendancies.each do |user_id, answer|
+          next if answer != MAYBE
 
-        buddies = (user_buddies[user_id] || [])
+          buddies = (user_buddies[user_id] || [])
 
-        if buddies.empty?
-          attendancies[user_id] = NO
-        elsif buddies.any? { |buddy| attendancies[buddy.buddy_id].nil? }
-          attendancies[user_id] = nil # still computing
-        elsif buddies.any? { |buddy| attendancies[buddy.buddy_id] == YES }
-          attendancies[user_id] = YES
-        elsif buddies.all? { |buddy| attendancies[buddy.buddy_id] == NO }
-          attendancies[user_id] = NO
-        else
-          # unresolvable this loop
+          if buddies.empty?
+            attendancies[user_id] = NO
+          elsif buddies.any? { |buddy| attendancies[buddy.buddy_id].nil? }
+            attendancies[user_id] = nil # still computing
+          elsif buddies.any? { |buddy| attendancies[buddy.buddy_id] == YES }
+            attendancies[user_id] = YES
+          elsif buddies.all? { |buddy| attendancies[buddy.buddy_id] == NO }
+            attendancies[user_id] = NO
+          else
+            # unresolvable this loop
+          end
         end
       end
     end
