@@ -11,12 +11,20 @@
               = user.email
       = submit_tag "We're okay."
 
+  h3 Friendship graph
+  = image_tag '/friendship.png'
+
   h3 Who is coming tomorrow?
   table
-    - @users.each do |user|
+    tr
+      th email
+      th answer
+      th attendancy
+    - User.all.each do |user|
       tr
         td = user.email
-        td = user.daily_statuses.find_by(day: 1.day.from_now)&.answer || 'NOT ANSWER'
+        td = user.daily_statuses.find_by(day: 1.day.from_now)&.answer || 'NOT ANSWERED'
+        td = @attendancies[user.id]
 - else
   = link_to 'login', new_user_session_path
   = link_to 'register', new_user_registration_path
