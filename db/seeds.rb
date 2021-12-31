@@ -1,7 +1,7 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
-#   Character.create(name: "Luke", movie: movies.first)
+fixtures_directories = ['fixtures']
+fixtures_directories.each do |fixtures_dir|
+  fixtures_files =
+    Dir.glob("#{fixtures_dir}/**/*.yml").map { |fixture| fixture.gsub!(/\.yml/, '').gsub!(%r{.*fixtures/}, '') }
+  ActiveRecord::FixtureSet.create_fixtures fixtures_dir, fixtures_files
+  fixtures_files.each { |fixtures| Rails.logger.info "#{fixtures.singularize.camelize.constantize.count} #{fixtures}." }
+end

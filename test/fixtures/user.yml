@@ -1,0 +1,50 @@
+---
+user_1:
+  id: 1
+  email: joey@friends.com
+  encrypted_password: '$2a$12$9f.kxTaNGnYD82b5ppNg2eZx0zF50.OwzItJlk/2uE5RoTFgTYyaK'
+  reset_password_token:
+  reset_password_sent_at:
+  remember_created_at:
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2021-12-31 10:34:23.678334000 Z
+    zone: !ruby/object:ActiveSupport::TimeZone &1
+      name: Etc/UTC
+    time: 2021-12-31 10:34:23.678334000 Z
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2021-12-31 15:16:25.062763000 Z
+    zone: *1
+    time: 2021-12-31 15:16:25.062763000 Z
+  notifcation_token:
+user_2:
+  id: 2
+  email: rachel@friends.com
+  encrypted_password: '$2a$12$TSd7MRlDC7RAgAP14WP63.g1i93M0Tmkm8JDOAU5.hVzN4P6PgeN2'
+  reset_password_token:
+  reset_password_sent_at:
+  remember_created_at:
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2021-12-31 10:35:16.283002000 Z
+    zone: *1
+    time: 2021-12-31 10:35:16.283002000 Z
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2021-12-31 15:16:31.660962000 Z
+    zone: *1
+    time: 2021-12-31 15:16:31.660962000 Z
+  notifcation_token:
+user_3:
+  id: 3
+  email: ross@friends.com
+  encrypted_password: '$2a$12$ZPos4bZZ625/9ooCGY/5zOzif0G7Hd/6CGWJ0YprqEVbT.CSOCnuG'
+  reset_password_token:
+  reset_password_sent_at:
+  remember_created_at:
+  created_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2021-12-31 11:00:16.558276000 Z
+    zone: *1
+    time: 2021-12-31 11:00:16.558276000 Z
+  updated_at: !ruby/object:ActiveSupport::TimeWithZone
+    utc: 2021-12-31 15:16:38.027482000 Z
+    zone: *1
+    time: 2021-12-31 15:16:38.027482000 Z
+  notifcation_token:
