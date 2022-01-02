@@ -1,7 +1,7 @@
 import React from 'react';
 import tw from 'twrnc'
-import Button from 'vibe/components/Button'
 import { Text, View, SafeAreaView } from 'react-native';
+import Button from 'vibe/components/Button'
 
 const Authentication = ({ navigation }) => (
   <SafeAreaView style={tw`flex-1`}>

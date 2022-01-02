@@ -5,11 +5,9 @@ import Authentication from 'vibe/screens/Authentication/Authentication'
 import Registration from 'vibe/screens/Authentication/Registration'
 import Login from 'vibe/screens/Authentication/Login'
 
-const websiteUrl = process.env.NODE_ENV === 'development' ? 'http://192.168.1.10:3000' : 'http://vibe.com';
-
 const AuthenticationStack = createStackNavigator();
 
-const AuthenticationRoutes = () => (
+const AuthenticationRoutes = ({ setIsAuthenticated }) => (
     <AuthenticationStack.Navigator
       initialRouteName="Authentication"
       screenOptions={{
@@ -19,17 +17,22 @@ const AuthenticationRoutes = () => (
       }}
     >
       <AuthenticationStack.Screen name="Authentication" options={{ headerShown: false }} component={Authentication} />
-      <AuthenticationStack.Screen name="Registration" component={Registration} />
-      <AuthenticationStack.Screen name="Login" component={Login} />
+      <AuthenticationStack.Screen name="Registration" >
+        {(props) => <Registration setIsAuthenticated={setIsAuthenticated} {...props}/>}
+      </AuthenticationStack.Screen>
+      <AuthenticationStack.Screen name="Login">
+        {(props) => <Login setIsAuthenticated={setIsAuthenticated} {...props}/>}
+      </AuthenticationStack.Screen>
     </AuthenticationStack.Navigator>
 );
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  fetch('http://192.168.1.10:3000/daily_statuses', { method: 'POST' })
   return (
   <NavigationContainer>
-    {isAuthenticated ? <></> : <AuthenticationRoutes />}
+    {isAuthenticated ? <></> : <AuthenticationRoutes setIsAuthenticated={setIsAuthenticated}/>}
   </NavigationContainer>
   );
 }
