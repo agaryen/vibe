@@ -3,7 +3,7 @@ import httpQuery from 'vibe/modules/httpQuery';
 
 const NETWORK_FAILED_FR = 'Erreur lors de la requête au serveur';
 
-const useHttpQuery = ({ url, trigger, onSuccess, onFailure, method = 'GET', body, params }) => {
+const useHttpQuery = ({ url, trigger, dependencies = [], onSuccess, onFailure, method = 'GET', body, params }) => {
   const [state, setState] = useState({ loading: !trigger, success: false, error: false });
   const executeRequest = async ({ body: triggerBody, params: triggerParams } = {}) => {
     setState((state) => ({ ...state, loading: true }));
@@ -23,7 +23,7 @@ const useHttpQuery = ({ url, trigger, onSuccess, onFailure, method = 'GET', body
 
   useEffect(() => {
     if (!trigger) executeRequest();
-  }, [url]);
+  }, [url, ...dependencies]);
 
   if (!trigger) return state;
   return { ...state, triggerQuery: executeRequest };
