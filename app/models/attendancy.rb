@@ -5,6 +5,7 @@ class Attendancy
   YES = 'YES'
   NO = 'NO'
   MAYBE = 'MAYBE'
+  ALL = [YES, NO, MAYBE]
 
   def initialize(day:)
     @day = day

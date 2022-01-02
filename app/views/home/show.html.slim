@@ -14,7 +14,11 @@
   h3.text-xl.mt-10 Friendship graph
   = image_tag '/friendship.png'
 
-  h3.text-xl.mt-10 Who is coming tomorrow?
+
+  h3.text-xl.mt-10 Who is coming ?
+  = form_tag root_path, method: :get, class: 'my-3'
+    = date_field :day, nil, value: @day, class: 'border py-1 px-3 rounded'
+    = submit_tag 'Show attendancy', class: 'bg-blue-500 hover:bg-blue-700 text-white py-1 px-3 ml-2 rounded'
   table.table-auto
     tr.border
       th email
@@ -23,7 +27,14 @@
     - User.all.each do |user|
       tr
         td.border.p-2 = user.email
-        td.border.p-2 = user.daily_statuses.find_by(day: 1.day.from_now)&.answer || 'NOT ANSWERED'
+        td.border.p-2
+          - if current_user == user
+            = form_for @daily_status, method: :post, url: daily_statuses_path,class: 'my-3' do |f|
+              = f.hidden_field :day
+              = f.select :answer, options_for_select(Attendancy::ALL, selected: @daily_status.answer), prompt: 'NOT ANSWERED'
+              = f.submit 'save', class: 'ml-2 border p-1 rounded'
+          - else
+            = user.daily_statuses.find_by(day: 1.day.from_now)&.answer || 'NOT ANSWERED'
         td.border.p-2 = @attendancies[user.id]
 - else
   = link_to 'login', new_user_session_path
