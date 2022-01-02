@@ -14,8 +14,10 @@ const useHttpQuery = ({ url, trigger, onSuccess, onFailure, method = 'GET', body
       })
       .catch((error) => {
         const message = error.message === 'Network request failed' ? NETWORK_FAILED_FR : error.message;
-        setState({ message, loading: false, success: false, error: true });
-        if (onFailure) onFailure(message);
+        const { status } = error;
+        const failureState = { message, status, loading: false, success: false, error: true };
+        setState(failureState);
+        if (onFailure) onFailure(failureState);
       });
   };
 

@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import tw from 'twrnc'
-import * as SecureStore from 'expo-secure-store';
 import { Text, View, SafeAreaView, KeyboardAvoidingView } from 'react-native';
 import Button from 'vibe/components/Button'
 import TextInput from 'vibe/components/TextInput'
@@ -14,16 +13,10 @@ const Login = ({ setIsAuthenticated }) => {
     method: 'POST',
     body: { user: { ...formState, remember_me: 1, commit: 'Log in' } },
     onSuccess: ({ data }) => {
-      console.log(data)
-      SecureStore.setItemAsync('token', token)
+      setIsAuthenticated(true)
     },
     trigger: true,
   })
-
-  const submitForm = () => {
-    triggerQuery()
-    //setIsAuthenticated(true)
-  }
 
   return (
   <SafeAreaView style={tw`flex-1`}>
@@ -37,7 +30,7 @@ const Login = ({ setIsAuthenticated }) => {
           <TextInput keyboardType="email-address" textContentType="emailAddress" label="Email" style={tw`w-full mb-8`} value={formState.email} onChangeText={(email) => setFormState((state) => ({ ...state, email }))} />
           <TextInput textContentType="password" secureTextEntry label="Password" style={tw`w-full`} value={formState.password} onChangeText={(password) => setFormState((state) => ({ ...state, password }))} />
         </View>
-        <Button style={tw`w-full`} onPress={() => submitForm()}>Login</Button>
+        <Button style={tw`w-full`} onPress={() => triggerQuery()}>Login</Button>
       </View>
     </View>
     </KeyboardAvoidingView>
