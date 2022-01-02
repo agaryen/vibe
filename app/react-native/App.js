@@ -29,7 +29,6 @@ const AuthenticationRoutes = ({ setIsAuthenticated }) => (
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  fetch('http://192.168.1.10:3000/daily_statuses', { method: 'POST' })
   return (
   <NavigationContainer>
     {isAuthenticated ? <></> : <AuthenticationRoutes setIsAuthenticated={setIsAuthenticated}/>}
