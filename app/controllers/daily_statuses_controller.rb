@@ -1,4 +1,5 @@
 class DailyStatusesController < ApplicationController
+  before_action :set_daily_status
   before_action :authenticate_user!
 
   def show
