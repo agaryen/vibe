@@ -1,24 +1,24 @@
 import React from 'react'
+import tw from 'twrnc'
+import Button from 'vibe/components/Button'
 import { StatusBar } from 'expo-status-bar';
 import { WebView } from 'react-native-webview';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView } from 'react-native';
 
-export default function App() {
-  const websiteUrl = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'http://vibe.com'
+const websiteUrl = process.env.NODE_ENV === 'development' ? 'http://192.168.1.10:3000' : 'http://vibe.com'
 
+const App = () => {
   return (
-    <WebView
-      style={styles.container}
-      source={{ uri: websiteUrl }}
-    />
+    <SafeAreaView style={tw`flex-1`}>
+      <View style={tw`flex h-full w-full px-8 justify-between items-center`}>
+        <Text style={tw`my-auto text-7xl font-bold`}>Vibe</Text>
+        <View style={tw`flex w-full items-center`}>
+          <Button style={tw`mb-8 w-full`}>Login</Button>
+          <Button style={tw`w-full`}>Register</Button>
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
