@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   }
 
   resources :buddies, only: [:create]
-  resources :daily_statuses, only: [:create]
+  resource :daily_statuses, only: [:show, :create]
 
   root to: 'home#show'
 end
