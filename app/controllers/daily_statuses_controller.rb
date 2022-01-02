@@ -2,7 +2,6 @@ class DailyStatusesController < ApplicationController
   before_action :authenticate_user!
 
   def show
-    binding.pry
     render json: @daily_status.to_json(only: %i(day answer))
   end
 
