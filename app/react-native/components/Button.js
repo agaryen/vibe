@@ -6,10 +6,11 @@ import tw from 'twrnc';
 const uiColors = {
   primary: 'bg-indigo-500 text-white',
   danger: 'bg-red-500 text-white',
+  warning: 'bg-yellow-500 text-white',
   success: 'bg-green-500 text-white',
 };
 
-const Button = ({ children, style, uiStyle = 'primary', onPress, disabled, fluid = false, ...props }) => {
+const Button = ({ children, style, uiStyle = 'primary', onPress, disabled, ...props }) => {
   const color = disabled ? 'bg-gray-300 text-white' : uiColors[uiStyle];
 
   return (
@@ -25,7 +26,7 @@ const Button = ({ children, style, uiStyle = 'primary', onPress, disabled, fluid
 };
 
 Button.propTypes = {
-  uiStyle: PropTypes.oneOf(['primary', 'danger', 'success']),
+  uiStyle: PropTypes.oneOf(['primary', 'danger', 'warning', 'success']),
   fluid: PropTypes.bool,
 };
 
