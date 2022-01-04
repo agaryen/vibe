@@ -3,10 +3,9 @@ import * as SecureStore from 'expo-secure-store';
 const environment = 'development';
 
 const URLS = {
-  development: 'http://192.168.1.10:3000',
+  development: 'http://192.168.1.135:3000',
   production: 'https://vibe-app.herokuapp.com',
 };
-const env = process.env.NODE_ENV || 'production'
 
 const getUrl = ({ url, params }) => {
   const urlObj = new URL(url, URLS[environment]);
@@ -33,7 +32,7 @@ const httpQuery = async ({ url, method = 'GET', body = {}, params = {} }) => {
   });
 
   const data = await response.json().catch(() => {});
-
+  console.log(data);
   if (!response.ok) throw { ...response, message: data?.message };
   return { ...response, data: await data };
 };
