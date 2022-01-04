@@ -11,7 +11,8 @@ class BuddiesController < ApplicationController
   end
 
   def index
-    buddies = current_user.buddies
-    render json: { items: User.all.where.not(id: current_user.id).map { |user| { id: user.id, email: user.email, buddy: buddies.include?(user) } } }
+    buddies = current_user.buddies.to_a
+    users = User.all.where.not(id: current_user.id).order(:email)
+    render json: { items: users.map { |user| { id: user.id, email: user.email, buddy: buddies.include?(user) } } }
   end
 end

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import tw from 'twrnc';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
-import { Text, View, SafeAreaView } from 'react-native';
+import { Text, SafeAreaView, ScrollView } from 'react-native';
 import useHttpQuery from 'vibe/modules/hooks/useHttpQuery';
 
 const Buddies = () => {
@@ -21,7 +21,7 @@ const Buddies = () => {
 
   return (
     <SafeAreaView style={tw`flex-1 my-6`}>
-      <View style={tw`h-full w-full px-8`}>
+      <ScrollView style={tw`h-full w-full px-8`}>
         <Text style={tw`text-5xl text-center my-8`}>Your buddies</Text>
         {users.map((user) => (
           <BouncyCheckbox
@@ -54,7 +54,7 @@ const Buddies = () => {
             }}
           />
         ))}
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
