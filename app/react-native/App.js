@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import Authentication from 'vibe/screens/Authentication/Authentication';
 import Registration from 'vibe/screens/Authentication/Registration';
 import Login from 'vibe/screens/Authentication/Login';
 import DailyStatus from 'vibe/screens/DailyStatus/DailyStatus';
+import Buddies from 'vibe/screens/DailyStatus/Buddies';
 
 const AuthenticationStack = createStackNavigator();
 
@@ -27,16 +30,36 @@ const AuthenticationRoutes = ({ setIsAuthenticated }) => (
   </AuthenticationStack.Navigator>
 );
 
+const Tab = createBottomTabNavigator();
+const Tabs = () => (
+  <Tab.Navigator
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+
+        if (route.name === 'Tomorrow') {
+          iconName = 'calendar-outline';
+        } else if (route.name === 'Buddies') {
+          iconName = 'people-circle';
+        }
+
+        return <Ionicons name={iconName} size={size} color={color} focused={focused} />;
+      },
+      tabBarActiveTintColor: '#6366f1',
+      tabBarInactiveTintColor: 'gray',
+    })}
+  >
+    <Tab.Screen name="Tomorrow" component={DailyStatus} />
+    <Tab.Screen name="Buddies" component={Buddies} />
+  </Tab.Navigator>
+);
+
 const App = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? (
-        <DailyStatus setIsAuthenticated={setIsAuthenticated} />
-      ) : (
-        <AuthenticationRoutes setIsAuthenticated={setIsAuthenticated} />
-      )}
+      {isAuthenticated ? <Tabs /> : <AuthenticationRoutes setIsAuthenticated={setIsAuthenticated} />}
     </NavigationContainer>
   );
 };

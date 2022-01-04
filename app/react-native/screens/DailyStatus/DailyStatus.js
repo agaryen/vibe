@@ -62,7 +62,7 @@ const DailyStatus = ({ setIsAuthenticated }) => {
           ) : (
             <>
               <Text style={tw`text-xl mb-40`}>{`You answered "${choicesOfAnswer[answer]}"`}</Text>
-              <Button uiStyle="warning" style={tw`mb-8`} onPress={() => setAnswer(null)}>
+              <Button uiStyle="primary" style={tw`mb-8`} onPress={() => setAnswer(null)}>
                 Change my status
               </Button>
             </>

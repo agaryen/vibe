@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
   }
 
-  resources :buddies, only: [:create]
+  resources :buddies, only: [:create, :index]
   resource :daily_statuses, only: [:show, :create]
 
   root to: 'home#show'
