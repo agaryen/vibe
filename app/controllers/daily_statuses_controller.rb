@@ -1,7 +1,6 @@
 class DailyStatusesController < ApplicationController
   before_action :authenticate_user!
   before_action :set_daily_status
-  skip_forgery_protection
 
   def show
     render json: @daily_status.to_json(only: %i(day answer))

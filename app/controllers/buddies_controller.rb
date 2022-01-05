@@ -1,6 +1,5 @@
 class BuddiesController < ApplicationController
   before_action :authenticate_user!
-  skip_forgery_protection
 
   def create
     current_user.buddy_ids = params[:buddy_ids].split(',')
