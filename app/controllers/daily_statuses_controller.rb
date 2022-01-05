@@ -1,6 +1,6 @@
 class DailyStatusesController < ApplicationController
-  before_action :set_daily_status
   before_action :authenticate_user!
+  before_action :set_daily_status
   skip_forgery_protection
 
   def show
