@@ -3,6 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import usePushNotifications from 'vibe/modules/hooks/usePushNotifications';
 import Authentication from 'vibe/screens/Authentication/Authentication';
 import Registration from 'vibe/screens/Authentication/Registration';
 import Login from 'vibe/screens/Authentication/Login';
@@ -31,30 +32,33 @@ const AuthenticationRoutes = ({ setIsAuthenticated }) => (
 );
 
 const Tab = createBottomTabNavigator();
-const Tabs = ({ setIsAuthenticated }) => (
-  <Tab.Navigator
-    screenOptions={({ route }) => ({
-      tabBarIcon: ({ focused, color, size }) => {
-        let iconName;
+const Tabs = ({ setIsAuthenticated }) => {
+  usePushNotifications();
+  return (
+    <Tab.Navigator
+      screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
 
-        if (route.name === 'Tomorrow') {
-          iconName = 'calendar-outline';
-        } else if (route.name === 'Buddies') {
-          iconName = 'people-circle';
-        }
+          if (route.name === 'Tomorrow') {
+            iconName = 'calendar-outline';
+          } else if (route.name === 'Buddies') {
+            iconName = 'people-circle';
+          }
 
-        return <Ionicons name={iconName} size={size} color={color} focused={focused} />;
-      },
-      tabBarActiveTintColor: '#6366f1',
-      tabBarInactiveTintColor: 'gray',
-    })}
-  >
-    <Tab.Screen name="Tomorrow">
-      {(props) => <DailyStatus setIsAuthenticated={setIsAuthenticated} {...props} />}
-    </Tab.Screen>
-    <Tab.Screen name="Buddies" component={Buddies} />
-  </Tab.Navigator>
-);
+          return <Ionicons name={iconName} size={size} color={color} focused={focused} />;
+        },
+        tabBarActiveTintColor: '#6366f1',
+        tabBarInactiveTintColor: 'gray',
+      })}
+    >
+      <Tab.Screen name="Tomorrow">
+        {(props) => <DailyStatus setIsAuthenticated={setIsAuthenticated} {...props} />}
+      </Tab.Screen>
+      <Tab.Screen name="Buddies" component={Buddies} />
+    </Tab.Navigator>
+  );
+};
 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(true);
