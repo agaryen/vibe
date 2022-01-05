@@ -7,7 +7,7 @@ import Authentication from 'vibe/screens/Authentication/Authentication';
 import Registration from 'vibe/screens/Authentication/Registration';
 import Login from 'vibe/screens/Authentication/Login';
 import DailyStatus from 'vibe/screens/DailyStatus/DailyStatus';
-import Buddies from 'vibe/screens/DailyStatus/Buddies';
+import Buddies from 'vibe/screens/Buddies/Buddies';
 
 const AuthenticationStack = createStackNavigator();
 
