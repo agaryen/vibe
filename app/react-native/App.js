@@ -31,7 +31,7 @@ const AuthenticationRoutes = ({ setIsAuthenticated }) => (
 );
 
 const Tab = createBottomTabNavigator();
-const Tabs = () => (
+const Tabs = ({ setIsAuthenticated }) => (
   <Tab.Navigator
     screenOptions={({ route }) => ({
       tabBarIcon: ({ focused, color, size }) => {
@@ -49,7 +49,9 @@ const Tabs = () => (
       tabBarInactiveTintColor: 'gray',
     })}
   >
-    <Tab.Screen name="Tomorrow" component={DailyStatus} />
+    <Tab.Screen name="Tomorrow">
+      {(props) => <DailyStatus setIsAuthenticated={setIsAuthenticated} {...props} />}
+    </Tab.Screen>
     <Tab.Screen name="Buddies" component={Buddies} />
   </Tab.Navigator>
 );
@@ -59,7 +61,11 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <Tabs /> : <AuthenticationRoutes setIsAuthenticated={setIsAuthenticated} />}
+      {isAuthenticated ? (
+        <Tabs setIsAuthenticated={setIsAuthenticated} />
+      ) : (
+        <AuthenticationRoutes setIsAuthenticated={setIsAuthenticated} />
+      )}
     </NavigationContainer>
   );
 };
