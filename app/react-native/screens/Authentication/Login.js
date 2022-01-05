@@ -12,14 +12,14 @@ const Login = ({ setIsAuthenticated }) => {
     url: '/users/sign_in',
     method: 'POST',
     body: { user: { ...formState, remember_me: 1, commit: 'Log in' } },
-    onSuccess: ({ data }) => {
+    onSuccess: () => {
       setIsAuthenticated(true);
     },
     trigger: true,
   });
 
   return (
-    <SafeAreaView style={tw`flex-1`}>
+    <SafeAreaView style={tw`my-6 flex-1`}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={tw`h-full w-full flex items-center`}>
           <Text style={tw`text-5xl text-center font-bold mt-8`}>Login</Text>
