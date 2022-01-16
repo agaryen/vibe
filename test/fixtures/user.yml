@@ -15,7 +15,7 @@ user_1:
     utc: 2021-12-31 15:16:25.062763000 Z
     zone: *1
     time: 2021-12-31 15:16:25.062763000 Z
-  notifcation_token:
+  notification_token:
 user_2:
   id: 2
   email: rachel@friends.com
@@ -31,7 +31,7 @@ user_2:
     utc: 2021-12-31 15:16:31.660962000 Z
     zone: *1
     time: 2021-12-31 15:16:31.660962000 Z
-  notifcation_token:
+  notification_token:
 user_3:
   id: 3
   email: ross@friends.com
@@ -47,4 +47,4 @@ user_3:
     utc: 2021-12-31 15:16:38.027482000 Z
     zone: *1
     time: 2021-12-31 15:16:38.027482000 Z
-  notifcation_token:
+  notification_token:
