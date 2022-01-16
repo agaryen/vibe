@@ -1,6 +1,5 @@
 require 'timeout'
 
-
 class Attendancy
   YES = 'YES'
   NO = 'NO'
