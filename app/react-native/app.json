@@ -2,7 +2,7 @@
   "expo": {
     "name": "vibe",
     "slug": "vibe",
-    "version": "1.0.0",
+    "version": "0.1.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -26,7 +26,7 @@
       },
       "googleServicesFile": "./google-services.json",
       "package": "com.office.vibe",
-      "versionCode": 3
+      "versionCode": 1
     },
     "web": {
       "favicon": "./assets/favicon.png"
