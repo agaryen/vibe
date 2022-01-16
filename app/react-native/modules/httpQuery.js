@@ -4,7 +4,7 @@ const environment = 'development';
 
 const URLS = {
   development: 'http://localhost:3000',
-  production: 'https://vibe-app.herokuapp.com',
+  production: 'https://officevibe.herokuapp.com/',
 };
 
 const getUrl = ({ url, params }) => {
