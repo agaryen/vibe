@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "701900206738",
+    "project_id": "vibe-ead0b",
+    "storage_bucket": "vibe-ead0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:701900206738:android:09cc3afde46a3a2a6eec4b",
+        "android_client_info": {
+          "package_name": "com.office.vibe"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "701900206738-8rvdun6s00v253j4nmb6auu6c7b9j09i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDsKPl3oFqvMuupM-AyFE2Kg2ImTT56z80"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "701900206738-8rvdun6s00v253j4nmb6auu6c7b9j09i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
