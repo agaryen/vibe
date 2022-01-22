@@ -1,4 +1,6 @@
 task inquire_daily_statuses: :environment do
+  return if Time.now.on_weekend? && Rails.env.production?
+
   client = Exponent::Push::Client.new
 
   puts '[inquire daily statuses] Start of the push broadcast'
@@ -18,6 +20,8 @@ task inquire_daily_statuses: :environment do
 end
 
 task inform_maybe_statuses: :environment do
+  return if Time.now.on_weekend? && Rails.env.production?
+
   client = Exponent::Push::Client.new
 
   should_come_body = 'Your buddies will be at the office tomorrow. You should definitely come!'
