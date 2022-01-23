@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store';
 const environment = 'development';
 
 const URLS = {
-  development: 'http://localhost:3000',
+  development: 'http://192.168.1.167:3000',
   production: 'https://officevibe.herokuapp.com/',
 };
 

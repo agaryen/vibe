@@ -22,7 +22,7 @@ const Registration = ({ setIsAuthenticated }) => {
     <SafeAreaView style={tw`my-6 flex-1`}>
       <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={tw`h-full w-full flex items-center`}>
-          <Text style={tw`text-5xl text-center font-bold mt-8`}>Login</Text>
+          <Text style={tw`text-5xl text-center font-bold mt-8`}>Registration</Text>
           <View style={tw`flex justify-end w-full flex-1 px-8`}>
             <View style={tw`w-full my-auto`}>
               <TextInput
