@@ -1,14 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import tw from 'twrnc';
-import { Text, View, SafeAreaView } from 'react-native';
+import { Text, View, SafeAreaView, Image } from 'react-native';
 import Button from 'vibe/components/Button';
 import useHttpQuery from 'vibe/modules/hooks/useHttpQuery';
 import dayjs from 'dayjs';
+import RemoteImg from '../../assets/remote.png';
+import OfficeImg from '../../assets/office.png';
+import MaybeImg from '../../assets/maybe.png';
 
 const choicesOfAnswer = {
   NO: 'No, I will stay at home',
   MAYBE: 'Maybe, it depends who is coming',
   YES: 'Yes, I will be vibing at the office!',
+};
+
+const IMAGES = {
+  NO: RemoteImg,
+  MAYBE: MaybeImg,
+  YES: OfficeImg,
 };
 
 const DailyStatus = ({ setIsAuthenticated }) => {
@@ -52,6 +61,17 @@ const DailyStatus = ({ setIsAuthenticated }) => {
             <Text style={tw`text-2xl mb-8`}>It's the end of the week, get some rest.</Text>
           ) : (
             <>
+              {answer ? (
+                <View
+                  style={{
+                    width: 120,
+                    height: 250,
+                    justifyContent: 'space-around',
+                  }}
+                >
+                  <Image source={IMAGES[answer]} style={{ width: 305, height: 180 }} />
+                </View>
+              ) : null}
               <Text style={tw`text-2xl font-bold mb-8`}>{'Are you coming tomorrow?'}</Text>
               {answer === null ? (
                 <>
@@ -67,7 +87,7 @@ const DailyStatus = ({ setIsAuthenticated }) => {
                 </>
               ) : (
                 <>
-                  <Text style={tw`text-xl mb-40`}>{`You answered "${choicesOfAnswer[answer]}"`}</Text>
+                  <Text style={tw`text-xl mb-20`}>{choicesOfAnswer[answer]}</Text>
                   <Button uiStyle="primary" style={tw`mb-8`} onPress={() => setAnswer(null)}>
                     Change my answer
                   </Button>
