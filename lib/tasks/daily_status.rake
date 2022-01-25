@@ -1,5 +1,5 @@
 task inquire_daily_statuses: :environment do
-  return if Time.now.on_weekend? && Rails.env.production?
+  return if 1.day.from_now.on_weekend? && Rails.env.production?
 
   client = Exponent::Push::Client.new
 
@@ -20,7 +20,7 @@ task inquire_daily_statuses: :environment do
 end
 
 task inform_maybe_statuses: :environment do
-  return if Time.now.on_weekend? && Rails.env.production?
+  return if 1.day.from_now.on_weekend? && Rails.env.production?
 
   client = Exponent::Push::Client.new
 
